@@ -4,13 +4,14 @@ See a source documentation link https://www.baeldung.com/ops/kubernetes-helm
 
 ## Pre-requisites
 
-1. Install helm
-
-## Creation
+1. Setup k8s or minikube cluster.
+2. Install helm.
+3. Set working folder.
 
 ```bash
-helm create hello-world
+cd k8s/helm/
 ```
+
 
 ## Installation
 
@@ -19,12 +20,12 @@ Linting
 helm lint ./hello-world
 ```
 
-
+Check a result template
 ```bash
 helm template ./hello-world
 ```
 
-
+Install to cluster
 ```bash
 helm install --set name=hello-world hello-world ./hello-world
 ```
@@ -38,7 +39,7 @@ helm ls --all
 ```bash
 export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services hello-world)
 export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
-curl http://$NODE_IP:$NODE_PORT
+curl -s http://$NODE_IP:$NODE_PORT
 ```
 
 expected output is
@@ -47,18 +48,36 @@ expected output is
 hello
 ```
 
-## Useful
+## Upgrade
 
+Upgrading
+```bash
+helm upgrade -f ./hello-world/values_01.yaml hello-world ./hello-world
+```
 
-Rollback
+Check revision
+```bash
+helm ls --all
+```
+
+Rollback if it's required
+
 ```bash
 helm rollback hello-world 1
 ```
+
+wait and check revision
+```bash
+helm ls --all
+```
+
+## Uninstall
 
 Uninstall
 ```bash
 helm uninstall hello-world
 ```
+## Useful
 
 Distributing chart
 ```bash

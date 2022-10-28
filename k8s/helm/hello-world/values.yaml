@@ -8,7 +8,8 @@ service:
   type: NodePort
   port: 8081
 
-containerArgs: "-text=hello"
+mycontainerArgs:
+  - "-text=hello"
 
 imagePullSecrets: []
 nameOverride: ""
