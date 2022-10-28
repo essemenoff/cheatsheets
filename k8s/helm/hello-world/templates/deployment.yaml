@@ -28,4 +28,4 @@ spec:
             - name: http
               containerPort: 5678
               protocol: TCP
-          args: ["-text=hello"]
+          args: {{ .Values.containerArgs }}
