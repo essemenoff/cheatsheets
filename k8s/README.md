@@ -2,6 +2,24 @@
 
 ## Kubernetes
 
+Show profiles
+```bash
+minikube profile list
+```
+
+Start minikube with two nodes
+```bash
+minikube start --vm-driver=virtualbox --no-vtx-check \
+ --nodes 2 \
+ --kubernetes-version "1.22.6" \
+ --profile "my-dev"
+```
+
+Delete kube
+```bash
+minikube delete -p my-dev
+```
+
 
 ## Helm
 

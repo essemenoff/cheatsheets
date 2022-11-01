@@ -10,9 +10,9 @@ flux check
 if check is't not OK please resolve it
 
 
-## Start a bootstrap
+## Create flux infrastructure
 
-Bootstrap flux infra in k8s
+Bootstrap flux infra in k8s cluster
 ```bash
 export GITHUB_USER=essemenoff
 flux bootstrap github \
@@ -22,7 +22,91 @@ flux bootstrap github \
  --path=k8s/01_flux/clusters/production \
  --personal
 ```
+This command creates:
+|Item|Value|Note|
+|Repo|essemenoff/cheatsheets| If it doesn't exist
+|Branch|flux_test||
+|Folder|k8s/01_flux/clusters/production||
 
+flux creates a branch 'flux_test' with a content in path 
+'k8s/01_flux/clusters/production/flux-system'.
+|Name|Purpose|
+|-|-|
+|gotk-components.yaml||
+|gotk-sync.yaml||
+|kustomization.yaml||
+
+See a merged changes in path 'k8s/01_flux/clusters/production/flux-system'.
+
+
+### Install components
+
+Install source-controller and helm-colntroller components in flux-system
+```bash
+flux install \
+--namespace=flux-system \
+--network-policy=false \
+--components=source-controller,helm-controller
+```
+
+See installed components
+```bash
+kubectl get pods -n flux-system
+```
+![image](.docs/flux_components.png)
+
+## Publish simple application (manually)
+
+Add podinfo's Helm repository to your cluster and configure Flux to check for new chart releases every ten minutes:
+```bash
+flux create source helm podinfo \
+--namespace=default \
+--url=https://stefanprodan.github.io/podinfo \
+--interval=10m
+```
+
+Create a podinfo-values.yaml file locally:
+```bash
+cat > podinfo-values.yaml <<EOL
+replicaCount: 2
+resources:
+  limits:
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 64Mi
+EOL
+```
+
+Create a Helm release for deploying podinfo in the default namespace:
+```bash
+flux create helmrelease podinfo \
+--namespace=default \
+--source=HelmRepository/podinfo \
+--release-name=podinfo \
+--chart=podinfo \
+--chart-version=">5.0.0" \
+--values=podinfo-values.yaml
+```
+
+Check using standart kubectl
+```bash
+kubectl get hr
+# or
+kubectl get hr -o yaml
+kubectl get hc
+```
+
+Check releases
+```bash
+flux get helmreleases -n default
+```
+
+To delete podinfo's Helm repository and release from your cluster run
+```bash
+flux -n default delete source helm podinfo
+flux -n default delete helmrelease podinfo
+```
 
 ## Remove all Flux stuff
 
@@ -33,3 +117,10 @@ flux uninstall --namespace=flux-system
 
 ## Useful link
 * https://fluxcd.io/flux/installation/#github-and-github-enterprise
+
+
+## Useful commands
+
+```bash
+flux get kustomizations --watch
+```
