@@ -20,6 +20,12 @@ Delete kube
 minikube delete -p my-dev
 ```
 
+### HNC (hierarchical-namespaces controller)
+
+```bash
+HNC_VERSION=v1.0.0
+kubectl apply -f https://github.com/kubernetes-sigs/hierarchical-namespaces/releases/download/${HNC_VERSION}/default.yaml
+```
 
 ## Helm
 
