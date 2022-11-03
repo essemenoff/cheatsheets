@@ -1,6 +1,7 @@
 # Helm
 
 See a source documentation link https://www.baeldung.com/ops/kubernetes-helm
+this is not HelmRelease.
 
 ## Pre-requisites
 

@@ -57,13 +57,24 @@ kubectl get pods -n flux-system
 
 ## Publish simple application (manually)
 
-Add podinfo's Helm repository to your cluster and configure Flux to check for new chart releases every ten minutes:
+Add podinfo's Helm repository to your cluster and configure Flux to check for new chart releases every ten minutes (choose a one):
+1. Helm repo
 ```bash
 flux create source helm podinfo \
 --namespace=default \
 --url=https://stefanprodan.github.io/podinfo \
 --interval=10m
 ```
+
+2. Git repo
+
+```bash
+flux create source git podinfo \
+  --namespace=default \
+  --url=https://github.com/stefanprodan/podinfo \
+  --branch=master
+```
+
 
 Create a podinfo-values.yaml file locally:
 ```bash
@@ -79,6 +90,7 @@ EOL
 ```
 
 Create a Helm release for deploying podinfo in the default namespace:
+1. Helm repo
 ```bash
 flux create helmrelease podinfo \
 --namespace=default \
@@ -87,6 +99,22 @@ flux create helmrelease podinfo \
 --chart=podinfo \
 --chart-version=">5.0.0" \
 --values=podinfo-values.yaml
+```
+
+2. Git repo
+
+```bash
+# flux create helmrelease podinfo \
+# --namespace=default \
+# --source=GitRepository/podinfo \
+# --release-name=podinfo22 \
+# --chart=./charts/podinfo \
+# --chart-version=">5.0.0" \
+# --values=podinfo-values.yaml
+flux create hr podinfo \
+  --interval=10m \
+  --source=GitRepository/podinfo \
+  --chart=./charts/podinfo
 ```
 
 Check using standart kubectl
@@ -124,3 +152,18 @@ flux uninstall --namespace=flux-system
 ```bash
 flux get kustomizations --watch
 ```
+
+
+```bash
+flux get source helm
+flux get source git
+```
+
+
+flux create helmrelease podinfo \
+--namespace=default \
+--source=GitRepository/podinfo \
+--release-name=podinfo \
+--chart=podinfo \
+--chart-version=">5.0.0" \
+--values=podinfo-values.yaml

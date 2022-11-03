@@ -9,7 +9,8 @@ service:
   port: 8081
 
 # testVar
-testVar: aaaa
+testVar:
+  - aaaa
 
 mycontainerArgs:
   - "-text=hello"

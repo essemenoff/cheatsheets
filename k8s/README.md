@@ -2,6 +2,8 @@
 
 ## Kubernetes
 
+### Start cluster in minikube
+
 Show profiles
 ```bash
 minikube profile list
@@ -18,6 +20,13 @@ minikube start --vm-driver=virtualbox --no-vtx-check \
 Delete kube
 ```bash
 minikube delete -p my-dev
+```
+
+### Secrets
+
+```bash
+kubectl -n default create secret generic sops-age \
+  --from-file=age.agekey=/path/to/key
 ```
 
 ### HNC (hierarchical-namespaces controller)
