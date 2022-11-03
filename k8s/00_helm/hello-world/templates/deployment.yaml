@@ -29,3 +29,10 @@ spec:
               containerPort: 5678
               protocol: TCP
           args: {{ .Values.mycontainerArgs }}
+
+# test testZxc
+{{- $testZxc := list -}}
+{{- range .Values.testVar }}
+    {{- $testZxc = append $testZxc . }}
+{{- end }}
+# {{- printf "%s" (default "" (join "," $testZxc)) -}}

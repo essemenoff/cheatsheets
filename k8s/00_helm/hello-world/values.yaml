@@ -8,6 +8,9 @@ service:
   type: NodePort
   port: 8081
 
+# testVar
+testVar: aaaa
+
 mycontainerArgs:
   - "-text=hello"
 
