@@ -22,6 +22,11 @@ Delete kube
 minikube delete -p my-dev
 ```
 
+ssh to node
+```bash
+minikube ssh -n my-dev-m02 -p my-dev
+```
+
 ### Secrets
 
 ```bash
