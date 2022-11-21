@@ -9,11 +9,20 @@ Show profiles
 minikube profile list
 ```
 
-Start minikube with two nodes
+Start minikube with two nodes with Docker engine
 ```bash
 minikube start --vm-driver=virtualbox --no-vtx-check \
  --nodes 2 \
  --kubernetes-version "1.22.6" \
+ --profile "my-dev"
+```
+
+Containerd option
+```
+minikube start --vm-driver=virtualbox --no-vtx-check \
+ --nodes 2 \
+ --kubernetes-version "1.22.6" \
+ --container-runtime=containerd \
  --profile "my-dev"
 ```
 

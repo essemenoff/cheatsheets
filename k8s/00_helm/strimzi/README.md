@@ -26,7 +26,26 @@ kubectl api-resources | findstr "kafka"
 
 ## Deploy first kafka cluster
 
+1. Download CLI zip https://kafka.apache.org/
+
+
+2. Get URL
+
 ```bash
 kubectl create -f cluster.yaml
-kubectl get service my-cluster-kafka-external-bootstrap -n my-kafka-project -o=jsonpath='{.spec.ports[0].nodePort}{"\n"}'
+kubectl get service my-cluster-kafka-external-bootstrap -o=jsonpath='{.spec.ports[0].nodePort}'
+#kubectl get nodes --output=jsonpath='{range .items[*]}{.status.addresses[?(@.type=="InternalIP")].address}{"\n"}{end}'
+
+# Run in different consoles
+bin/kafka-console-producer.sh --bootstrap-server <node-address>:_<node-port>_ --topic my-topic
+bin/kafka-console-consumer.sh --bootstrap-server <node-address>:_<node-port>_ --topic my-topic --from-beginning
 ```
+
+Example
+```bash
+bin/kafka-console-producer.sh --bootstrap-server 192.168.59.102:32336 --topic my-topic
+bin/kafka-console-consumer.sh --bootstrap-server 192.168.59.102:32336 --topic my-topic --from-beginning
+```
+
+3. Typ anything in "bin/kafka-console-producer.sh" console and see the same in bin/kafka-console-consumer.sh
+

@@ -8,7 +8,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: my-cluster
-  namespace: my-kafka-project
+  namespace: default
 spec:
   kafka:
     replicas: 1
@@ -23,9 +23,13 @@ spec:
         tls: true
         authentication:
           type: tls
-      - name: external
+      - name: nodeport01
         port: 9094
         type: nodeport
+        tls: false
+      - name: external01
+        port: 9095
+        type: loadbalancer
         tls: false
     storage:
       type: jbod
@@ -54,7 +58,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: my-topic
-  namespace: my-kafka-project
+  namespace: default
   labels:
     strimzi.io/cluster: "my-cluster"
 spec:
