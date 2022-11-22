@@ -1,0 +1,17 @@
+---
+ingress:
+  enabled: true
+  hosts:
+    - registry.evgenii.com
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-body-size: "30720m"
+  tls:
+    - secretName: docker-registry-prod
+      hosts:
+        - registry.evgenii.com
+
+secrets:
+  # username:password
+  htpasswd: "username:$2y$05$mnaMdOsL7RCjyhTwYnGSp.7OUmZyd2EYLYj0WWKGKSpcVCl9"

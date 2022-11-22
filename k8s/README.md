@@ -14,7 +14,7 @@ Start minikube with two nodes with Docker engine
 minikube start --vm-driver=virtualbox --no-vtx-check \
  --nodes 2 \
  --kubernetes-version "1.22.6" \
- --profile "my-dev"
+ --profile "mydev"
 ```
 
 Containerd option
@@ -23,17 +23,22 @@ minikube start --vm-driver=virtualbox --no-vtx-check \
  --nodes 2 \
  --kubernetes-version "1.22.6" \
  --container-runtime=containerd \
- --profile "my-dev"
+ --profile "mydev"
+```
+
+Add ingress
+```bash
+minikube addons enable ingress -p mydev
 ```
 
 Delete kube
 ```bash
-minikube delete -p my-dev
+minikube delete -p mydev
 ```
 
 ssh to node
 ```bash
-minikube ssh -n my-dev-m02 -p my-dev
+minikube ssh -n mydev-m02 -p mydev
 ```
 
 ### Secrets
