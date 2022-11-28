@@ -17,13 +17,14 @@ minikube start --vm-driver=virtualbox --no-vtx-check \
  --profile "mydev"
 ```
 
-Containerd option
-```
+Containerd option with calico plugin
+```bash
 minikube start --vm-driver=virtualbox --no-vtx-check \
  --nodes 2 \
  --kubernetes-version "1.22.6" \
  --container-runtime=containerd \
- --profile "mydev"
+ --profile "mydev" \
+ --network-plugin=cni --cni=calico
 ```
 
 Add ingress
