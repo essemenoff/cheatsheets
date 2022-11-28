@@ -1,1 +1,2 @@
 k8s/01_flux/clusters/production/flux-system/*
+node_modules

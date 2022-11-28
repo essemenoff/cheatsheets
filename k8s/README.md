@@ -11,7 +11,7 @@ minikube profile list
 
 Start minikube with two nodes with Docker engine
 ```bash
-minikube start --vm-driver=virtualbox --no-vtx-check \
+minikube start --driver=virtualbox --no-vtx-check \
  --nodes 2 \
  --kubernetes-version "1.22.6" \
  --profile "mydev"
@@ -19,7 +19,7 @@ minikube start --vm-driver=virtualbox --no-vtx-check \
 
 Containerd option with calico plugin
 ```bash
-minikube start --vm-driver=virtualbox --no-vtx-check \
+minikube start --driver=virtualbox --no-vtx-check \
  --nodes 2 \
  --kubernetes-version "1.22.6" \
  --container-runtime=containerd \
