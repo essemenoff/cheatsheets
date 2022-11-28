@@ -1,0 +1,12 @@
+name: Test yarn issue
+jobs:
+  jobs1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
