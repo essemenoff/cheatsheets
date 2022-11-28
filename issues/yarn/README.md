@@ -8,4 +8,7 @@ npm init
 npm install --global yarn
 
 npm install express
+
+# it creates yarn.lock
+yarn install
 ```

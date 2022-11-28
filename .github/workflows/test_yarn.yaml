@@ -1,0 +1,19 @@
+---
+name: Test yarn issue
+on:
+  workflow_dispatch:
+
+jobs:
+  jobs1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test yarn
+        env:
+          https_proxy: http://zxc.com:3128
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.yarnpkg.com
+          cache: yarn
+          cache-dependency-path: issues/yarn/yarn.lock

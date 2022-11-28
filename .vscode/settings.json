@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-workflow.json": "file:///c%3A/1000_Work/myDEV/00_GitHub/cheatsheets/.github/workflows/test_yarn.yml"
+    }
+}
