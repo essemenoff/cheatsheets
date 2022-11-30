@@ -46,7 +46,7 @@ Install source-controller and helm-colntroller components in flux-system
 flux install \
 --namespace=flux-system \
 --network-policy=false \
---components=source-controller,helm-controller,image-reflector-controller
+--components=source-controller,helm-controller,image-reflector-controller,image-automation-controller
 ```
 
 See installed components

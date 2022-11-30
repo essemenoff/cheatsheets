@@ -7,7 +7,14 @@ jobs:
   jobs1:
     runs-on: ubuntu-latest
     steps:
+      - name: Check branch name
+        if: github.ref == 'refs/heads/master'
+        run: |
+          echo "Please switch to non-master branch"
+          exit 1
+
       - uses: actions/checkout@v3
+
       - name: Test yarn
         env:
           https_proxy: http://zxc.com:3128
