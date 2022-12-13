@@ -27,9 +27,10 @@ minikube start --driver=virtualbox --no-vtx-check \
  --network-plugin=cni --cni=calico
 ```
 
-Add ingress
+Add ingress and metric API server
 ```bash
 minikube addons enable ingress -p mydev
+minikube addons enable metrics-server -p mydev
 ```
 
 Delete kube

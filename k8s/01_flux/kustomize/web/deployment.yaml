@@ -1,0 +1,93 @@
+---
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apple-space
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: apple-limits
+  namespace: apple-space
+spec:
+  limits:
+  - type: Container
+    default:
+      memory: 100Mi
+      cpu: 100m
+    defaultRequest:
+      memory: 100Mi
+      cpu: 50m
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: apple-quota
+  namespace: apple-space
+spec:
+  hard:
+    limits.cpu: 100m
+    limits.memory: 300Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apple-app
+  namespace: apple-space
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: apple
+  template:
+    metadata:
+      labels:
+        app: apple
+    spec:
+      containers:
+        - name: apple-app
+          image: hashicorp/http-echo:0.2.0
+          args:
+            - "-text=apple"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: apple-service
+  namespace: apple-space
+spec:
+  selector:
+    app: apple
+  ports:
+    - port: 5678 # Default port for image
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-service
+  namespace: apple-space
+spec:
+  selector:
+    app: apple
+  ports:
+    - port: 8765
+      targetPort: 5678
+      protocol: TCP
+  type: LoadBalancer
+  externalIPs:
+    - 192.168.60.10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web2
+  namespace: apple-space
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: apple-service
+  type: NodePort
