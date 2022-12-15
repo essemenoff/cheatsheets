@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: cheatsheets
+spec:
+  interval: 10m0s
+  url: ssh://git@github.com/essemenoff/cheatsheets.git
+  ref:
+    branch: master

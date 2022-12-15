@@ -1,0 +1,8 @@
+# Default values for grafana.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+pvc:
+  size: 512Mb
+
+port: 3000
