@@ -1,16 +1,42 @@
 # FluxCD
 
-## Getting started
+## Install Flux components to k8s
 
-Check your environment for fluxcd deployment
+Install source-controller and helm-colntroller components in flux-system
+```bash
+flux install \
+--namespace=flux-system \
+--network-policy=false \
+--components=source-controller,helm-controller,image-reflector-controller,image-automation-controller,kustomize-controller
+```
+
+or
+
+```cmd.exe
+flux install ^
+--namespace=flux-system ^
+--network-policy=false ^
+--components=source-controller,helm-controller,image-reflector-controller,image-automation-controller,kustomize-controller
+```
+
+See installed components
+```bash
+kubectl get pods -n flux-system
+```
+![image](.docs/flux_components.png)
+
+
+## Check flux installation
+
+Check flux installation using flux CLI. It should be installed before.
 ```bash
 flux check
 ```
 
-if check is't not OK please resolve it
+if check is't not OK please resolve issues.
 
 
-## Create flux infrastructure
+## Create flux infrastructure (it's not need)
 
 Bootstrap flux infra in k8s cluster
 ```bash
@@ -38,22 +64,6 @@ flux creates a branch 'flux_test' with a content in path
 
 See a merged changes in path 'k8s/01_flux/clusters/production/flux-system'.
 
-
-### Install components
-
-Install source-controller and helm-colntroller components in flux-system
-```bash
-flux install \
---namespace=flux-system \
---network-policy=false \
---components=source-controller,helm-controller,image-reflector-controller,image-automation-controller
-```
-
-See installed components
-```bash
-kubectl get pods -n flux-system
-```
-![image](.docs/flux_components.png)
 
 ## Publish simple application (manually)
 
